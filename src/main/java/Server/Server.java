@@ -1,8 +1,6 @@
 package Server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -28,14 +26,7 @@ public class Server {
             Socket acceptSocket = serverSocket.accept();
             connections.add(acceptSocket);
             threadPool.doTask(() -> {
-                while (true) {
-                    try {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(acceptSocket.getInputStream()));
-                        System.out.println(reader.readLine());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+
                 /*
                 Send all commands from cache to this specified client
                  */
