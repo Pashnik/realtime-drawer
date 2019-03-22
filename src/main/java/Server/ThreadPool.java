@@ -2,7 +2,6 @@ package Server;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 public class ThreadPool {
 
@@ -13,11 +12,8 @@ public class ThreadPool {
     }
 
 
-    public void doTask(Semaphore semaphore, Worker worker) {
-        executorService.execute(() -> {
-            worker.process();
-            semaphore.release();
-        });
+    public void doTask(Worker worker) {
+        executorService.execute(() -> worker.process());
     }
 
     public void closeWorkPool() {
