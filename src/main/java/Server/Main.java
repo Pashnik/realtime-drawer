@@ -16,6 +16,7 @@ public class Main {
             for (int i = 0; i < 10; i++) {
                 server.sendCommand(scanner.next());
             }
+            server.stop();
         } catch (IOException e) {
             e.printStackTrace();
         }
