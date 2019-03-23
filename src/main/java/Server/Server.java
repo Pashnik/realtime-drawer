@@ -94,7 +94,7 @@ public class Server {
         Properties prop = new Properties();
         InputStream input;
         try {
-            input = new FileInputStream("src/main/resources/cfg/log4j.properties");
+            input = new FileInputStream("resources/cfg/log4j.properties");
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
