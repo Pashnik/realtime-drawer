@@ -13,9 +13,9 @@ public class Cache {
 
     public Cache() {
         list = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            list.add("Init");
-//        }
+        for (int i = 0; i < 10; i++) {
+            list.add("Init");
+        }
     }
 
     public synchronized void write(String command) {

@@ -27,4 +27,10 @@ public class ThreadPool {
         executorService.shutdown();
     }
 
+
+    @FunctionalInterface
+    public interface Worker {
+        void process() throws IOException;
+    }
+
 }
