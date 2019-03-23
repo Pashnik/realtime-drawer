@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
 
 public class Server {
 
@@ -17,7 +20,7 @@ public class Server {
     public Server(int port, int backlog, int threads) throws IOException {
         serverSocket = new ServerSocket(port, backlog);
         threadPool = new ThreadPool(threads);
-        connections = new ArrayList<>();
+        connections = Collections.synchronizedList(new ArrayList<>());
         cache = new Cache();
     }
 
@@ -29,30 +32,29 @@ public class Server {
         threadPool.doTask(() -> {
             while (true) {
                 Socket acceptSocket = serverSocket.accept();
+                connections.add(acceptSocket);
                 if (!cache.isEmpty()) {
                     List<String> commands = cache.readAll();
                     ServerSender sender = new ServerSender(acceptSocket);
                     for (String command : commands) {
-                        sender.send(command);
+                        sender.send("From cache:" + " " + command);
                     }
                 }
-                connections.add(acceptSocket);
             }
         });
     }
 
     /*
     Send command to all clients from connections list
-     */
+    */
 
-    public void sendCommand(String command) {
-        for (Socket connection : connections) {
-            threadPool.doTask(() -> {
-
+    public void sendCommand(String command) throws IOException {
+        Objects.requireNonNull(command);
+        synchronized (connections) {
+            for (Socket connection : connections) {
                 ServerSender sender = new ServerSender(connection);
-                sender.send(command);
-
-            });
+                threadPool.doTask(() -> sender.send(command));
+            }
         }
         cache.write(command);
     }

@@ -20,4 +20,7 @@ public class ServerSender {
         writer.flush();
     }
 
+    public void close() throws IOException {
+        writer.close();
+    }
 }
