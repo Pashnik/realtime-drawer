@@ -12,7 +12,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-
 public class Server {
 
     private static final Logger log = Logger.getLogger(Server.class);
@@ -46,7 +45,7 @@ public class Server {
                 connections.add(acceptSocket);
                 if (!cache.isEmpty()) {
                     List<String> commands = cache.readAll();
-                    ServerSender sender = new ServerSender(acceptSocket);
+                    ServerSender sender = new ServerSender(acceptSocket, connections);
                     for (String command : commands) {
                         sender.send("From cache:" + " " + command);
                     }
@@ -69,7 +68,7 @@ public class Server {
         Objects.requireNonNull(command);
         synchronized (connections) { // synchronization for Iterator
             for (Socket connection : connections) {
-                ServerSender sender = new ServerSender(connection);
+                ServerSender sender = new ServerSender(connection, connections);
                 threadPool.doTask(() -> sender.send(command));
             }
         }
@@ -77,9 +76,10 @@ public class Server {
     }
 
     public void stop() throws IOException {
-        closeConnections();
-        threadPool.closeWorkPool();
+        // TODO: error while stopping
         serverSocket.close();
+        threadPool.closeWorkPool();
+        closeConnections();
     }
 
     private void closeConnections() throws IOException {
