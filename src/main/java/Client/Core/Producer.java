@@ -20,15 +20,13 @@ public class Producer extends Thread {
     @Override
     public void run() {
         while (true) {
-            String command;
             try {
-                if ((command = reader.readLine()) != null) {
-                    taskQueue.add(command);
-                }
+                String command = reader.readLine();
+                taskQueue.add(command);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
+
 }
