@@ -21,4 +21,5 @@ public class Client {
         Socket socket = new Socket(host, port);
         new Producer(taskQueue, socket.getInputStream());
     }
+
 }

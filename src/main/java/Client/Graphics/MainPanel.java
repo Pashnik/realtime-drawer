@@ -3,30 +3,36 @@ package Client.Graphics;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPanel extends JPanel {
 
+    private final List<Line> lines;
+
     public MainPanel() {
-        super();
+        lines = new ArrayList<>();
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paint(Graphics g) {
         super.paintComponent(g);
+
         Graphics2D g2d = (Graphics2D) g;
 
-
-        GeneralPath shape = new GeneralPath();
-        shape.moveTo(0, 0);
-        shape.curveTo(0, 2 * 100, 1 * 100, 2 * 100, 4 * 100, -1 * 100);
-        // shape.curveTo(-1.0, -92.0, 4, 6, 7, 9);
-//        shape.curveTo(-1.0, -90.0, 1, 2, 1, 2);
-
-
-        AffineTransform transform = AffineTransform.getTranslateInstance(500.0, 500.0);
+        AffineTransform transform = AffineTransform.getTranslateInstance((float) MainFrame.getFrameWidth() / 2,
+                (float) MainFrame.getFrameHeight() / 2);
         g2d.setTransform(transform);
-        g2d.draw(shape);
-
+        for (Line line : lines) {
+            line.paint(g2d);
+        }
     }
+
+
+    public void addLine(Line line) {
+        lines.add(line);
+        this.repaint();
+    }
+
+
 }
