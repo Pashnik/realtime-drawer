@@ -16,16 +16,17 @@ public class Parser {
         return syntaxAnalyzer.isCorrect();
     }
 
-    public void getX() {
-
+    public double getX() {
+        return syntaxAnalyzer.getX();
     }
 
-    public void getY() {
-
+    public double getY() {
+        return syntaxAnalyzer.getY();
     }
 
-    public void getColor() {
-
+    public int getColor() {
+        return syntaxAnalyzer.getColor();
     }
+
 
 }
