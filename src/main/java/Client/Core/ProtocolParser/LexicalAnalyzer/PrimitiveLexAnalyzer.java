@@ -9,23 +9,24 @@ public class PrimitiveLexAnalyzer {
     private static final int MAC_GROUP_NUMBER = 6;
     private static final int MAC_GROUP_SIZE = 2;
 
-     /*
-    Simple Lexical Analyzer
-     */
-
-    public List<Token> getTokens(String command) {
+    public List<Token> getTokens(String command) { // hardcode for quick writing
         List<Token> tokens = new ArrayList<>();
         for (String token : command.split(";")) {
             if (isAction(token)) {
                 tokens.add(new Token(Type.ACTION, token));
+            } else {
+                if (isMacAddress(token)) {
+                    tokens.add(new Token(Type.MAC_ADDRESS, token));
+                } else {
+                    if (isColor(token)) {
+                        tokens.add(new Token(Type.COLOR, token));
+                    } else {
+                        if (isCoordinate(token)) {
+                            tokens.add(new Token(Type.COORDINATE, token));
+                        }
+                    }
+                }
             }
-            if (isMacAddress(token)) {
-                tokens.add(new Token(Type.MAC_ADDRESS, token));
-            }
-            if (isCoordinate(token)) {
-                tokens.add(new Token(Type.COORDINATE, token));
-            }
-            if (isColor(token)) tokens.add(new Token(Type.COLOR, token));
         }
         return tokens;
     }
@@ -43,11 +44,24 @@ public class PrimitiveLexAnalyzer {
         return true;
     }
 
-    private boolean isCoordinate(String part) { // ???
-        return part.charAt(0) == '0' && part.charAt(1) == '.';
+    private boolean isCoordinate(String part) {
+        return isDouble(part);
     }
+
+     /*
+    it is not clear what principle colors are coded for, so put a Stub
+     */
 
     private boolean isColor(String part) { // ???
         return part.equals("-16777216");
+    }
+
+    private boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
