@@ -15,6 +15,7 @@ public class PrimitiveSyntaxAnalyzer {
     }
 
     public boolean isCorrect() {
+        if (tokens.size() != 5) return false;
         if (tokens.get(0).getTokenType() == Type.MAC_ADDRESS) {
             if (tokens.get(1).getTokenType() == Type.ACTION) {
                 if (tokens.get(2).getTokenType() == Type.COORDINATE) {

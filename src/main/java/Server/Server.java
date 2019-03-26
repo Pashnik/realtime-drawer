@@ -47,7 +47,7 @@ public class Server {
                     List<String> commands = cache.readAll();
                     ServerSender sender = new ServerSender(acceptSocket, connections);
                     for (String command : commands) {
-                        sender.send("From cache:" + " " + command);
+                        sender.send(command);
                     }
                 }
             }

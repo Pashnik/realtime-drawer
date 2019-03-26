@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainPanel extends JPanel {
@@ -11,7 +12,7 @@ public class MainPanel extends JPanel {
     private final List<Line> lines;
 
     public MainPanel() {
-        lines = new ArrayList<>();
+        lines = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override
@@ -24,8 +25,10 @@ public class MainPanel extends JPanel {
                 (float) MainFrame.getFrameHeight() / 2);
         g2d.setTransform(transform);
 
-        for (Line line : lines) {
-            line.paint(g2d);
+        synchronized (lines) {
+            for (Line line : lines) {
+                line.paint(g2d);
+            }
         }
     }
 

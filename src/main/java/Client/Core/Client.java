@@ -20,7 +20,6 @@ public class Client {
         this.taskQueue = new TaskQueue();
 
         this.mainFrame = new MainFrame();
-        mainFrame.showWidow();
     }
 
     public void start() throws IOException, InterruptedException {

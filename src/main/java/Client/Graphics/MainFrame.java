@@ -31,17 +31,8 @@ public class MainFrame extends JFrame {
         return height;
     }
 
-    public void showWidow() {
-        SwingUtilities.invokeLater(MainFrame::new);
-    }
-
     public void showLine(Line line) {
         panel.addLine(line);
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MainFrame::new);
-    }
-
 }
 

@@ -16,39 +16,23 @@ public class Consumer {
         this.mainFrame = mainFrame;
     }
 
-    public void consume() throws InterruptedException {  // hardcode
-        Line line = new Line();
+    public void consume() throws InterruptedException {
         while (true) {
             Parser parser = new Parser(taskQueue.get());
             if (parser.isCorrect()) {
-                if (parser.isStart()) { // start of the curve
-                    line.addCurve();
-                    mainFrame.showLine(line);
-
-                    line = new Line();
-                    line.addStartPoint(parser.getX(), parser.getY());
-                    Parser next;
-                    int counter = 0;
-                    while ((next = new Parser(taskQueue.get())).isCorrect()
-                            && counter != VALUES - 1) {
+                Line line = new Line();
+                line.addStartPoint(parser.getX(), parser.getY());
+                Parser next;
+                int counter = 0;
+                while (counter != VALUES) {
+                    if ((next = new Parser(taskQueue.get())).isCorrect()) {
                         line.addPoint(next.getX(), next.getY());
                         counter++;
-                    }
-                    line.addCurve();
-                    mainFrame.showLine(line);
-                } else {
-                    Parser next;
-                    int counter = 0;
-                    while ((next = new Parser(taskQueue.get())).isCorrect()
-                            && counter != VALUES - 2) {
-                        line.addPoint(next.getX(), next.getY());
-                        counter++;
-                    }
-                    line.addCurve();
-                    mainFrame.showLine(line);
+                    } else counter--;
                 }
+                line.addCurve();
+                mainFrame.showLine(line);
             }
         }
     }
-
 }
