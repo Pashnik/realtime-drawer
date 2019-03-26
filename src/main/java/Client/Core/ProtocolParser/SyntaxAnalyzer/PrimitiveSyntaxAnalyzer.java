@@ -27,13 +27,13 @@ public class PrimitiveSyntaxAnalyzer {
         return false;
     }
 
-    public double getX() {
-        return Double.parseDouble(tokens.get(2).getValue());
+    public float getX() {
+        return Float.parseFloat(tokens.get(2).getValue());
     }
 
 
-    public double getY() {
-        return Double.parseDouble(tokens.get(3).getValue());
+    public float getY() {
+        return Float.parseFloat(tokens.get(3).getValue());
     }
 
     /*
@@ -42,6 +42,10 @@ public class PrimitiveSyntaxAnalyzer {
 
     public int getColor() {
         return Color.BITMASK;
+    }
+
+    public boolean isStart() {
+        return tokens.get(1).getValue().equals("start");
     }
 
 }

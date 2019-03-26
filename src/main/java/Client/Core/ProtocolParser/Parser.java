@@ -16,11 +16,11 @@ public class Parser {
         return syntaxAnalyzer.isCorrect();
     }
 
-    public double getX() {
+    public float getX() {
         return syntaxAnalyzer.getX();
     }
 
-    public double getY() {
+    public float getY() {
         return syntaxAnalyzer.getY();
     }
 
@@ -28,5 +28,8 @@ public class Parser {
         return syntaxAnalyzer.getColor();
     }
 
+    public boolean isStart() {
+        return syntaxAnalyzer.isStart();
+    }
 
 }

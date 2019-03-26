@@ -9,7 +9,7 @@ public class MainFrame extends JFrame {
     private static int height;
     private final MainPanel panel;
 
-    private MainFrame() {
+    public MainFrame() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         width = dimension.width;
         height = dimension.height;
@@ -29,6 +29,14 @@ public class MainFrame extends JFrame {
 
     public static int getFrameHeight() {
         return height;
+    }
+
+    public void showWidow() {
+        SwingUtilities.invokeLater(MainFrame::new);
+    }
+
+    public void showLine(Line line) {
+        panel.addLine(line);
     }
 
     public static void main(String[] args) {

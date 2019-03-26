@@ -76,7 +76,6 @@ public class Server {
     }
 
     public void stop() throws IOException {
-        // TODO: error while stopping
         serverSocket.close();
         threadPool.closeWorkPool();
         closeConnections();

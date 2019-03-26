@@ -23,11 +23,11 @@ public class MainPanel extends JPanel {
         AffineTransform transform = AffineTransform.getTranslateInstance((float) MainFrame.getFrameWidth() / 2,
                 (float) MainFrame.getFrameHeight() / 2);
         g2d.setTransform(transform);
+
         for (Line line : lines) {
             line.paint(g2d);
         }
     }
-
 
     public void addLine(Line line) {
         lines.add(line);
