@@ -28,5 +28,4 @@ public class Client {
 
         new Consumer(taskQueue, mainFrame).consume();
     }
-
 }

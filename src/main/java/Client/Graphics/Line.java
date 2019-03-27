@@ -9,7 +9,8 @@ public class Line {
 
     private static final int BASE_SIZE = 1000;
     private static final int SIZE = 3;
-    private Point temp;
+    private Point firstTemp;
+    private Point secondTemp;
 
     private final GeneralPath generalPath;
     private final List<Point> curvePoints;
@@ -26,25 +27,33 @@ public class Line {
     public void addCurve() {
         switch (curvePoints.size()) {
             case SIZE:
-                temp = new Point((curvePoints.get(1).getX() + curvePoints.get(2).getX()) / 2,
+                firstTemp = new Point((curvePoints.get(1).getX() + curvePoints.get(2).getX()) / 2,
                         (curvePoints.get(1).getY() + curvePoints.get(2).getY()) / 2);
+
+                secondTemp = new Point(curvePoints.get(2).getX(), curvePoints.get(2).getY());
 
                 generalPath.curveTo(curvePoints.get(0).getX(), curvePoints.get(0).getY(),
                         curvePoints.get(1).getX(), curvePoints.get(1).getY(),
-                        temp.getX(), temp.getY());
+                        firstTemp.getX(), firstTemp.getY());
                 break;
 
-            case SIZE - 1:
-                generalPath.curveTo(temp.getX(), temp.getY(),
-                        curvePoints.get(0).getX(), curvePoints.get(0).getY(),
-                        (curvePoints.get(0).getX() + curvePoints.get(1).getX()) / 2,
-                        (curvePoints.get(0).getY() + curvePoints.get(1).getY()) / 2
+            case SIZE - 2:
+                generalPath.curveTo(firstTemp.getX(), firstTemp.getY(),
+                        secondTemp.getX(), secondTemp.getY(),
+                        (secondTemp.getX() + curvePoints.get(0).getX()) / 2,
+                        (secondTemp.getY() + curvePoints.get(0).getY()) / 2
                 );
 
-                temp = new Point(curvePoints.get(0).getX() + curvePoints.get(1).getX() / 2,
-                        (curvePoints.get(0).getY() + curvePoints.get(1).getY()) / 2);
+                firstTemp = new Point((secondTemp.getX() + curvePoints.get(0).getX()) / 2,
+                        (secondTemp.getY() + curvePoints.get(0).getY()) / 2);
+
+                secondTemp = new Point(curvePoints.get(0).getX(), curvePoints.get(0).getY());
                 break;
         }
+    }
+
+    public void clear() {
+        curvePoints.clear();
     }
 
     public void addStartPoint(float x, float y) {
