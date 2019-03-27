@@ -22,10 +22,11 @@ public class Server {
     private final Cache cache;
 
 
-    public Server(int port, int backlog, int threads) throws IOException {
-        setLogProperties();
+    public Server(int port, int backlog, int threads, String file) throws IOException {
+        setLogProperties(file);
         serverSocket = new ServerSocket(port, backlog);
         log.info("server is started");
+
 
         threadPool = new ThreadPool(threads);
         connections = Collections.synchronizedList(new ArrayList<>());
@@ -89,11 +90,11 @@ public class Server {
         }
     }
 
-    private void setLogProperties() {
+    public void setLogProperties(String fileName) {
         Properties prop = new Properties();
         InputStream input;
         try {
-            input = new FileInputStream("resources/cfg/log4j.properties");
+            input = new FileInputStream(fileName);
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
